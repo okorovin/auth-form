@@ -1,15 +1,14 @@
-import ValidatorInstance from './ValidatorInstance.ts';
 
 // Простой вариант проверки.
 // При желании можно прикрутить полный https://pdw.ex-parrot.com/Mail-RFC822-Address.html
 const emailRegexp = /^['*~a-z0-9_.+!-]+@['*~a-z0-9!-]+\.['*~a-z0-9-!.]+$/i;
 
-export default class EmailValidator extends ValidatorInstance {
+export default class EmailValidator {
   min = 0;
 
   max = 0;
 
-  override isValid(str: string) {
+  isValid(str: string) {
     const res = emailRegexp.test(str);
 
     if (res && this.min) {
