@@ -1,0 +1,243 @@
+
+.login-layout {
+    width: 440px;
+    padding: 32px;
+
+    position: relative;
+
+    box-sizing: border-box;
+
+    background: #fff;
+    border-radius: 6px;
+}
+
+.login-layout_logo-box {
+    height: 64px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-layout_logo {
+    height: 24px;
+
+    display: block;
+}
+
+
+.input,
+.input {
+    width: 376px;
+    height: 40px;
+
+    padding: 0 12px 0 12px;
+
+    box-sizing: border-box;
+
+    border-radius: 6px;
+    background-color: #fff;
+
+    border: 1px solid rgba(0,0,0, 15%);
+
+    line-height: 38px;
+
+    color: rgba(0,0,0, 88%);
+
+    font-size: 16px;
+    font-weight: 400;
+
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
+
+}
+.input::placeholder {
+    color: rgba(0,0,0, 25%);
+}
+.input:focus {
+    border-color: #1677FF;
+    outline: 2px solid rgba(5, 145, 255, 0.1);
+}
+
+.input_password,
+.input_email {
+    padding-left: 30px;
+}
+
+
+
+.icon_input {
+    margin: 12px 0 0 11px;
+    width: 16px;
+    position: absolute;
+    display: block;
+}
+
+.form-row {
+    margin: 0 0 16px;
+    display: block;
+}
+
+.error-message {
+    margin: 6px 0 0;
+    color: #FF4D4F;
+    font-size: 14px;
+}
+
+
+
+.button {
+    width: 376px;
+    height: 40px;
+
+    padding: 0 12px 0 12px;
+
+    box-sizing: border-box;
+
+    border-radius: 6px;
+    /*background-color: #fff;*/
+    background-color: rgba(22, 119, 255, 1);
+
+    border: 1px solid rgba(0,0,0, 15%);
+
+    line-height: 38px;
+
+    /*color: rgba(0,0,0, 88%);*/
+    color: #fff;
+
+    font-size: 16px;
+    font-weight: 400;
+
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
+
+    box-shadow: 0 1px 0 rgba(5, 145, 255, 0.1);
+
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: rgba(22, 119, 255, 0.8);
+}
+
+.button:disabled,
+.button:disabled:hover {
+    border: 1px solid rgba(0,0,0, 15%);
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.04);
+    color: rgba(0, 0, 0, 0.25);
+    cursor: default;
+}
+
+.login-form_title {
+    margin: 0 0 24px;
+
+    font-size: 24px;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.88);
+    letter-spacing: 1px;
+    line-height: 32px;
+
+    text-align: center;
+}
+.login-form_title._m4 {
+    margin: 0 0 4px;
+}
+
+.login-form_subtitle {
+    margin: 0 0 24px;
+    text-align: center;
+}
+.back {
+    position: absolute;
+    top: 38px;
+    lef: 42px;
+
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+
+    cursor: pointer;
+}
+
+.back img {
+    width: 18px;
+    display: block;
+}
+
+
+
+.input_pin {
+    width: 478px;
+
+    height: 60px;
+    margin: 0 -478px 0 0;
+    padding: 0 0 0 20px;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+
+    box-sizing: border-box;
+
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 51px;
+
+    line-height: 60px;
+
+    border: none !important;
+
+    background: transparent;
+    /*background: #fff url("/input.png") repeat-x 0 0;*/
+
+    outline: none !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Optional: removes any default margin */
+}
+
+/* For Firefox */
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* For other modern browsers (standard way) */
+input[type="number"] {
+    appearance: none;
+}
+
+
+.pin_wrap {
+    width: 384px;
+    overflow: hidden;
+
+    position: relative;
+
+    white-space: nowrap;
+}
+
+.pin_frame {
+    /*width: 53px;*/
+    height: 60px;
+    margin: 0 12px 0 0;
+
+    display: inline-block;
+
+    border-radius: 8px;
+    border: 1px solid rgba(217, 217, 217, 1);
+    box-sizing: border-box;
+
+}
+.pin_frame:before {
+    content: '';
+    display: block;
+    width: 50px;
+}
+.pin_frame_l {
+    flex-grow: 1;
+}
