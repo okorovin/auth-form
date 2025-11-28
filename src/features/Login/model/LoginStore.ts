@@ -166,15 +166,9 @@ export class LoginStore {
         try {
             const res = await new Promise<Result>((resolve) => {
                 setTimeout(() => {
-
+                    e = !e;
                     // типа моки
-                    if (!e) {
-                        e = true;
-                        resolve(results[1])
-                    } else {
-                        resolve(results[0])
-                    }
-
+                    resolve(results[e ? 1 : 0])
                 }, 1000)
             })
 
@@ -282,15 +276,9 @@ export class LoginStore {
         try {
             const res = await new Promise<Result>((resolve) => {
                 setTimeout(() => {
-
+                    e = !e;
                     // типа моки
-                    if (!e) {
-                        e = true;
-                        resolve(results[2])
-                    } else {
-                        resolve(results[0])
-                    }
-
+                    resolve(results[e ? 2 : 0])
                 }, 1000)
             })
 
