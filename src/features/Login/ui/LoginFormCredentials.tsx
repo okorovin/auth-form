@@ -63,7 +63,9 @@ export const LoginFormCredentials = observer(() => {
                 className="button"
                 disabled={loginStore.disabled}
             >
-                Continue
+                {
+                    loginStore.loading ? 'Loading...' : 'Log in'
+                }
             </button>
 
             <FormFieldError message={loginStore.errors.common}/>

@@ -35,7 +35,9 @@ export const LoginFormPin = observer(() => {
                     className="button"
                     disabled={loginStore.disabled}
                 >
-                    Continue
+                    {
+                        loginStore.loading ? 'Loading...' : 'Continue'
+                    }
                 </button>
             )
         }

@@ -65,6 +65,8 @@ export class LoginStore {
 
     shouldGetNew = false
 
+    loading = false;
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -159,6 +161,7 @@ export class LoginStore {
         }
 
         this.setDisabled(true);
+        this.setLoading(true);
 
         try {
             const res = await new Promise<Result>((resolve) => {
@@ -185,6 +188,7 @@ export class LoginStore {
             this.processApiError('Api error ' + (e as Error).message)
         } finally {
             this.setDisabled(false);
+            this.setLoading(false);
         }
     }
 
@@ -273,6 +277,8 @@ export class LoginStore {
 
         this.setDisabled(true);
 
+        this.setLoading(true);
+
         try {
             const res = await new Promise<Result>((resolve) => {
                 setTimeout(() => {
@@ -297,7 +303,13 @@ export class LoginStore {
             this.processApiError('Api error ' + (e as Error).message)
         } finally {
             this.setDisabled(false);
+            this.setLoading(false);
         }
+    }
+
+
+    setLoading(loading: boolean) {
+        this.loading = loading
     }
 }
 
