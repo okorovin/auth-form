@@ -269,9 +269,9 @@ export class LoginStore {
             return;
         }
 
-        this.setDisabled(true);
+        this.setDisabled(true)
 
-        this.setLoading(true);
+        this.setLoading(true)
 
         try {
             const res = await new Promise<Result>((resolve) => {
@@ -283,15 +283,15 @@ export class LoginStore {
             })
 
             if (res.success) {
-                this.setAuthStep(AuthStep.SUCCESS);
+                this.setAuthStep(AuthStep.SUCCESS)
             } else {
                 this.processApiError(res.error || '')
             }
         } catch (e) {
             this.processApiError('Api error ' + (e as Error).message)
         } finally {
-            this.setDisabled(false);
-            this.setLoading(false);
+            this.setDisabled(false)
+            this.setLoading(false)
         }
     }
 

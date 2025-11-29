@@ -15,11 +15,12 @@ export const LoginFormPin = observer(() => {
         loginStore.startTimer()
     }, [])
 
+    const hasPinError = loginStore.errors.pin || loginStore.errors.common
+
     const getButton = () => {
         if (loginStore.shouldGetNew) {
             return (
                 <button
-                    type="submit"
                     className="button"
                     onClick={loginStore.getNew}
                 >
@@ -33,7 +34,7 @@ export const LoginFormPin = observer(() => {
                 <button
                     type="submit"
                     className="button"
-                    disabled={loginStore.disabled}
+                    disabled={loginStore.disabled || !!hasPinError}
                 >
                     {
                         loginStore.loading ? 'Loading...' : 'Continue'
@@ -44,6 +45,8 @@ export const LoginFormPin = observer(() => {
 
         return null
     }
+
+
 
     return (
         <form onSubmit={loginStore.onPinSubmit} className="">
@@ -60,9 +63,10 @@ export const LoginFormPin = observer(() => {
                 Enter the 6-digit code from the Google Authenticator app
             </div>
 
-            <label className="form-row pin_wrap"
+            <label className={"form-row pin_wrap" + (hasPinError ? ' __error' : '')}
                    ref={labelRef}
-                   onScroll={() => labelRef.current!.scrollLeft = 0}>
+                   onScroll={() => labelRef.current!.scrollLeft = 0}
+            >
                 <div className="pin_frame"></div>
                 <div className="pin_frame"></div>
                 <div className="pin_frame"></div>

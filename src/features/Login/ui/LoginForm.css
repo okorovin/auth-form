@@ -73,10 +73,6 @@
     display: block;
 }
 
-.form-row {
-    margin: 0 0 16px;
-    display: block;
-}
 
 .error-message {
     margin: 6px 0 0;
@@ -201,12 +197,10 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0; /* Optional: removes any default margin */
 }
 
-/* For Firefox */
 input[type="number"] {
     -moz-appearance: textfield;
 }
 
-/* For other modern browsers (standard way) */
 input[type="number"] {
     appearance: none;
 }
@@ -240,4 +234,15 @@ input[type="number"] {
 }
 .pin_frame_l {
     flex-grow: 1;
+}
+
+
+.form-row {
+    margin: 0 0 16px;
+    display: block;
+}
+
+.form-row.__error .input,
+.form-row.__error .pin_frame {
+    border-color: rgba(255, 77, 79, 1);
 }

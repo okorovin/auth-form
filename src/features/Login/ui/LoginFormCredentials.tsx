@@ -22,7 +22,7 @@ export const LoginFormCredentials = observer(() => {
                 Sign in to your account to&nbsp;continue
             </div>
 
-            <label className="form-row">
+            <label className={"form-row" + (loginStore.errors.email ? ' __error' : '')}>
                 {/*  чтобы при автокомплите не пропадала иконка */}
                 <img src="user.png" className="icon_input" />
                 <input
@@ -40,7 +40,7 @@ export const LoginFormCredentials = observer(() => {
                 <FormFieldError message={loginStore.errors.email} />
             </label>
 
-            <label className="form-row">
+            <label className={"form-row" + (loginStore.errors.password ? ' __error' : '')}>
                 {/*  чтобы при автокомплите не пропадала иконка */}
                 <img src="lock.png" className="icon_input"/>
                 <input
