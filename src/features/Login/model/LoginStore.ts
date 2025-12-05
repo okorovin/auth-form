@@ -1,7 +1,7 @@
 import {makeAutoObservable} from "mobx"
 import React from "react"
 import EmailValidator from "../../../shared/lib/EmailValidator.ts"
-import {loginApi, type LoginError, verifyCodeApi} from "../../../shared/api/mocks.ts"
+import {loginApi, verifyCodeApi} from "../../../shared/api/mocks.ts"
 
 
 export enum AuthStep {
