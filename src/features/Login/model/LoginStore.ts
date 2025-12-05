@@ -1,6 +1,7 @@
-import {makeAutoObservable} from "mobx";
-import React from "react";
-import EmailValidator from "../../../shared/lib/EmailValidator.ts";
+import {makeAutoObservable} from "mobx"
+import React from "react"
+import EmailValidator from "../../../shared/lib/EmailValidator.ts"
+import {loginApi, type LoginError, verifyCodeApi} from "../../../shared/api/mocks.ts"
 
 
 export enum AuthStep {
@@ -13,28 +14,6 @@ enum Errors {
     WRONG_CREDENTIALS ='WRONG_CREDENTIALS',
     WRONG_CODE ='WRONG_CODE'
 }
-
-interface Result {
-    success: boolean,
-    error?: Errors
-}
-
-const results = [
-    {
-        success: true,
-    },
-    {
-        success: false,
-        error: Errors.WRONG_CREDENTIALS
-    },
-
-    {
-        success: false,
-        error: Errors.WRONG_CODE
-    },
-]
-
-let e = false
 
 const TIMEOUT = 30 // сек
 
@@ -51,6 +30,8 @@ export class LoginStore {
 
     pin = ''
 
+    userId = ''
+
     errors = {
         email: '',
         password: '',
@@ -65,7 +46,7 @@ export class LoginStore {
 
     shouldGetNew = false
 
-    loading = false;
+    loading = false
 
     constructor() {
         makeAutoObservable(this)
@@ -73,12 +54,16 @@ export class LoginStore {
 
 
     setDisabled(disabled: boolean) {
-        this.disabled = disabled;
+        this.disabled = disabled
+    }
+
+    setUserId(userId: string) {
+        this.userId = userId
     }
 
 
     setAuthStep(authStep: AuthStep) {
-        this.authStep = authStep;
+        this.authStep = authStep
     }
 
     onEmailInput = (val: string) => {
@@ -88,12 +73,12 @@ export class LoginStore {
     }
 
     onEmailBlur = () => {
-        this.checkEmail();
+        this.checkEmail()
         this.validateCredentials()
     }
 
     onPasswordInput = (val: string) => {
-        this.password = val;
+        this.password = val
         this.errors.password = ''
         this.validateCredentials()
     }
@@ -126,20 +111,20 @@ export class LoginStore {
     }
 
     validateCredentials = () => {
-        this.disabled = false;
+        this.disabled = false
 
 
         if (this.hasErrors()) {
-            this.disabled = true;
+            this.disabled = true
         }
 
         if (!this.email || !this.password) {
-            this.disabled = true;
+            this.disabled = true
         }
     }
 
     hasErrors() {
-        return !!Object.values(this.errors).find(Boolean)
+        return !!(this.errors.email || this.errors.password)
     }
 
     onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -147,73 +132,66 @@ export class LoginStore {
 
         this.errors.common = ''
 
-        this.checkEmail();
+        this.checkEmail()
 
         this.validateCredentials()
 
-        this.sendCredentials();
+        this.sendCredentials()
     }
 
 
     async sendCredentials() {
         if (this.disabled) {
-            return;
+            return
         }
 
-        this.setDisabled(true);
-        this.setLoading(true);
+        this.setDisabled(true)
+        this.setLoading(true)
 
         try {
-            const res = await new Promise<Result>((resolve) => {
-                setTimeout(() => {
-                    e = !e;
-                    // типа моки
-                    resolve(results[e ? 1 : 0])
-                }, 1000)
+            const res = await loginApi({
+                email: this.email,
+                password: this.password
             })
 
-            if (res.success) {
-                this.setAuthStep(AuthStep.PIN);
-                e = false;
-            } else {
-                this.processApiError(res.error || '')
-            }
+            this.setAuthStep(AuthStep.PIN)
+            this.setUserId(res.userId)
+
         } catch (e) {
-            this.processApiError('Api error ' + (e as Error).message)
+            this.processApiError('Api error ' + (e as LoginError).message)
         } finally {
-            this.setDisabled(false);
-            this.setLoading(false);
+            this.setDisabled(false)
+            this.setLoading(false)
         }
     }
 
     processApiError(error: Errors | string) {
         if (error === Errors.WRONG_CREDENTIALS) {
-            this.errors.common = 'Wrong creadentials';
-            return;
+            this.errors.common = 'Wrong creadentials'
+            return
         }
         if (error === Errors.WRONG_CODE) {
-            this.errors.common = 'Invalid code';
-            return;
+            this.errors.common = 'Invalid code'
+            return
         }
 
-        this.errors.common = error;
+        this.errors.common = error
     }
 
     back = () => {
-        this.authStep = AuthStep.CREDENTIALS;
+        this.authStep = AuthStep.CREDENTIALS
         loginStore.errors.pin = ''
         loginStore.errors.common = ''
     }
 
 
     onPinInput = (val: string) => {
-        console.log('val', val);
         this.pin = val.trim().replace(/\D/gi, '').substring(0,6)
 
 
         this.errors.pin = ''
 
-        loginStore.disabled = false;
+        loginStore.disabled = false
     }
 
     onPinBlur = () => {
@@ -226,12 +204,12 @@ export class LoginStore {
     }
 
     startTimer() {
-        this.stopTimer();
+        this.stopTimer()
 
-        this.shouldGetNew = false;
+        this.shouldGetNew = false
 
         this.timer = setTimeout(() => {
-            this.shouldGetNew = true;
+            this.shouldGetNew = true
         }, TIMEOUT * 1000)
     }
 
@@ -252,21 +230,21 @@ export class LoginStore {
     onPinSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
 
-        this.errors.common = '';
+        this.errors.common = ''
 
 
         if (this.pin.length !== 6) {
-            this.disabled = false;
-            return;
+            this.disabled = false
+            return
         }
 
-        this.sendPin();
+        this.sendPin()
     }
 
 
     async sendPin() {
         if (this.disabled) {
-            return;
+            return
         }
 
         this.setDisabled(true)
@@ -274,19 +252,12 @@ export class LoginStore {
         this.setLoading(true)
 
         try {
-            const res = await new Promise<Result>((resolve) => {
-                setTimeout(() => {
-                    e = !e;
-                    // типа моки
-                    resolve(results[e ? 2 : 0])
-                }, 1000)
+            await verifyCodeApi({
+                code: this.pin,
+                userId: this.userId
             })
 
-            if (res.success) {
-                this.setAuthStep(AuthStep.SUCCESS)
-            } else {
-                this.processApiError(res.error || '')
-            }
+            this.setAuthStep(AuthStep.SUCCESS)
         } catch (e) {
             this.processApiError('Api error ' + (e as Error).message)
         } finally {
