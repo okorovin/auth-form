@@ -158,7 +158,7 @@ export class LoginStore {
             this.setUserId(res.userId)
 
         } catch (e) {
-            this.processApiError('Api error ' + (e as LoginError).message)
+            this.processApiError((e as Error).message)
         } finally {
             this.setDisabled(false)
             this.setLoading(false)
@@ -259,7 +259,7 @@ export class LoginStore {
 
             this.setAuthStep(AuthStep.SUCCESS)
         } catch (e) {
-            this.processApiError('Api error ' + (e as Error).message)
+            this.processApiError((e as Error).message)
         } finally {
             this.setDisabled(false)
             this.setLoading(false)
